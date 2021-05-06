@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
-import axios from './util/axiosConfig';
-import './main.scss';
+import './App.scss';
 import { getUsers } from './util/api';
+import AgeGroupsTable from './Components/AgeGroupsTable/AgeGroupsTable';
+import LoadingSpinner from './reusable/LoadingSpinner';
 
 function App() {
 
   const [users, setUsers] = useState([]);
 
-
   if (!users.length) {
-    getUsers('300', setUsers);
+    getUsers('500', setUsers);
+    return <LoadingSpinner />
   }
 
-  console.log(users);
+  const fromMinToMaxAge = users.sort(function(a, b){return a.registered.age - b.registered.age})
 
   return (
-    <div className="App">
-      { users.length  &&
-        users.map(user =>
-          <div>
-            {`${user.name.title}. ${user.name.first} ${user.name.last}`}
-          </div>
-        )
-      }
+    <div className="users-wrapper">
+      { users.length && <AgeGroupsTable  usersArray={fromMinToMaxAge} /> }
     </div>
   );
 }

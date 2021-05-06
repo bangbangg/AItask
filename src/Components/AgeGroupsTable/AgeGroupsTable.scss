@@ -1,0 +1,21 @@
+@import './../../assets/colors';
+@import './../../media';
+
+
+.MuiPaper-root {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+.MuiTableCell-sizeSmall:last-child {
+  padding-right: 0 !important;
+}
+
+.empty-button {
+  border: none;
+  background: none;
+}
+
+.disabled {
+  color: rgba(123, 118, 118, 0.714) !important;
+}

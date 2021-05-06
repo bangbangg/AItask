@@ -1,0 +1,51 @@
+@import './../../assets/colors';
+@import './../../media';
+
+
+.user-card__photo {
+  width: 20%;
+  border: 1px solid gray;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.user-card {
+  display: flex;
+  width: 100% ;
+  height: 55px !important;
+}
+
+.user-card__info {
+  width: 80%;
+  padding-bottom: 2px;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+
+  .user-card__infoField {
+    height: 50%;
+    font-size: 10px;
+    padding-left: 4px;
+
+    &:first-child {
+      border-bottom: 1px solid gray;
+    }
+  }
+}
+
+.small-width {
+  width: 60%;
+}
+
+.user-card__delete-from-favorite {
+  width: 20%;
+  border: 1px solid gray;
+
+  .user-card_delete-from-favorite__button {
+    width: 100%;
+    height: 100%;
+    background-color: green;
+    color: black;
+  }
+}
