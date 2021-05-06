@@ -18,7 +18,8 @@ const UserCard = ({ user, favoriteUser }) => {
           {user.email}
         </div>
       </div>
-      { favoriteUser &&
+      {
+        favoriteUser &&
         <div className='user-card__delete-from-favorite'>
           <button className='user-card_delete-from-favorite__button'>
             Удалить

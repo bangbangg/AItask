@@ -52,14 +52,14 @@ const AgeGroupsTable = ({ usersArray }) => {
     return ageGroupsMinAge.map(age => `${age}-${age+10}`)
   }
 
+  const ageGroupsArray = getAgeGroups(50);
+
   function getGroupUsersArray(ageGroup) {
     const categoryAgeArray = ageGroup.split('-');
     const minAge = +categoryAgeArray[0];
     const maxAge = +categoryAgeArray[1];
     return usersList.filter(user => minAge < user.registered.age && user.registered.age <= maxAge )
   }
-
-  const ageGroupsArray = getAgeGroups(50);
 
   function initialData() {
     let initialObject = {}
