@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   }
 });
 
-const FavoriteUsers = ({ favoriteUsers, setFavoriteUsers, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler }) => {
+const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler, dropCardHandler, setFavoriteUsers }) => {
   const classes = useStyles();
 
   return (
@@ -49,14 +49,19 @@ const FavoriteUsers = ({ favoriteUsers, setFavoriteUsers, dragOverHandler, dragL
           </TableCell>
         </TableRow>
       </TableHead>
-      <TableBody className='draggable-container'>
+      <TableBody
+        className='draggable-container'
+        onDragOver={(ev) => dragOverHandler(ev)}
+        onDrop={(ev) => dropCardHandler(ev, favoriteUsers)}
+      >
         {
-          !!favoriteUsers && !!favoriteUsers.length &&
-          favoriteUsers.map(user =>
+          !!favoriteUsers.users.length &&
+          favoriteUsers.users.map(user =>
             <UserCard
               className='favorite_users'
               user={user}
               favoriteUser={true}
+              setFavoriteUsers={setFavoriteUsers}
               list={favoriteUsers}
               dragOverHandler={dragOverHandler}
               dragEndHandler={dragEndHandler}
@@ -66,6 +71,9 @@ const FavoriteUsers = ({ favoriteUsers, setFavoriteUsers, dragOverHandler, dragL
             />
           )
         }
+        <TableRow>
+          <TableCell className={classes.tableCellHeader} />
+        </TableRow>
       </TableBody>
     </Table>
   </TableContainer>
@@ -73,13 +81,14 @@ const FavoriteUsers = ({ favoriteUsers, setFavoriteUsers, dragOverHandler, dragL
 }
 
 FavoriteUsers.propTypes = {
-  favoriteUsers: PropTypes.array,
-  setFavoriteUsers: PropTypes.func.isRequired,
+  favoriteUsers: PropTypes.object.isRequired,
   dragOverHandler: PropTypes.func.isRequired,
   dragEndHandler: PropTypes.func.isRequired,
   dragLeaveHandler: PropTypes.func.isRequired,
   dropHandler: PropTypes.func.isRequired,
-  dragStartHandler: PropTypes.func.isRequired
+  dragStartHandler: PropTypes.func.isRequired,
+  dropCardHandler: PropTypes.func.isRequired,
+  setFavoriteUsers: PropTypes.func.isRequired
 };
 
 export default FavoriteUsers;

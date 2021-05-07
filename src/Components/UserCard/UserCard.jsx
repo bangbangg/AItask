@@ -5,7 +5,13 @@ import { getReadableDate } from './../../util/misk';
 import clsx from 'clsx';
 
 
-const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler }) => {
+const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler, setFavoriteUsers }) => {
+
+  function onDeleteButtonPress(user) {
+    const deleteIndex = list.users.indexOf(user);
+    list.users.splice(deleteIndex, 1)
+    setFavoriteUsers({...list})
+  }
 
   return (
     <div
@@ -29,7 +35,10 @@ const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler,
       {
         favoriteUser &&
         <div className='user-card__delete-from-favorite'>
-          <button className='user-card_delete-from-favorite__button'>
+          <button
+            className='user-card_delete-from-favorite__button'
+            onClick={() => onDeleteButtonPress(user)}
+          >
             Удалить
           </button>
         </div>
@@ -46,7 +55,8 @@ UserCard.propTypes = {
   dragEndHandler: PropTypes.func.isRequired,
   dragLeaveHandler: PropTypes.func.isRequired,
   dropHandler: PropTypes.func.isRequired,
-  dragStartHandler: PropTypes.func.isRequired
+  dragStartHandler: PropTypes.func.isRequired,
+  setFavoriteUsers: PropTypes.func.isRequired
 };
 
 export default UserCard;

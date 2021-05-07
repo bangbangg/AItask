@@ -4,7 +4,7 @@ export function getUsers(numberOfUsers, setUsers, setFavoriteUsers){
   axios
     .get(`?results=${numberOfUsers}`)
     .then(response => {
-      setUsers(response.data.results)
+      setUsers({id: 1, users: response.data.results})
     })
     .catch(error => {
       console.log(error);

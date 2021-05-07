@@ -39,6 +39,7 @@ const useStyles = makeStyles({
 });
 
 const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler }) => {
+
   const classes = useStyles();
 
   const [searching, setSearching] = useState('');
@@ -52,16 +53,16 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
     return ageGroupsMinAge.map(age => `${age}-${age+10}`)
   }
 
-  function getGroupUsersArray(ageGroup) {
+  const ageGroupsArray = getAgeGroups(50);
+
+  function sortUsersWithGroups(ageGroup) {
     const categoryAgeArray = ageGroup.split('-');
     const minAge = +categoryAgeArray[0];
     const maxAge = +categoryAgeArray[1];
-    return usersList.filter(user => minAge < user.registered.age && user.registered.age <= maxAge )
+    return usersList.users.filter(user => minAge < user.registered.age && user.registered.age <= maxAge );
   }
 
-  const ageGroupsArray = getAgeGroups(50);
-
-  function initialData() {
+  function initialAgeGroupsData() {
     let initialObject = {}
     for (let i=0; i<ageGroupsArray.length; i++) {
       initialObject[ageGroupsArray[i]] = false
@@ -69,12 +70,10 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
     return initialObject;
   }
 
-  const isUserlistOpened = initialData();
-
-  const [isOpened, setIsOpened] = useState(isUserlistOpened);
+  const [isOpened, setIsOpened] = useState(initialAgeGroupsData());
 
   useEffect(() => {
-    if (usersArray.length !== usersList.length && !!searching) {
+    if (usersArray.users.length !== usersList.users.length && !!searching) {
       changeSearchTextColor(searching);
     }
   }, [usersList, isOpened])
@@ -86,15 +85,15 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
 
   function searchInUsersArray() {
     const searchingFor = searching.toLowerCase();
-    const searchingArray = usersArray.filter(user =>
+    const searchingArray = usersArray.users.filter(user =>
         user.name.first.toLowerCase().includes(searchingFor) || user.name.last.toLowerCase().includes(searchingFor)
       )
     return searchingArray;
   }
 
-  function keyPressHandler(ev) {
+  function onKeyPressHandler(ev) {
     if (ev.key === 'Enter') {
-      setUsersList(searchInUsersArray());
+      setUsersList({...usersArray, ...{users: searchInUsersArray()}});
     }
   }
 
@@ -111,7 +110,7 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
                   value={searching}
                   onChange={(ev) => setSearching(ev.target.value)}
                   labelWidth={70}
-                  onKeyPress={(ev) => keyPressHandler(ev)}
+                  onKeyPress={(ev) => onKeyPressHandler(ev)}
                 />
             </FormControl>
             </TableCell>
@@ -121,7 +120,7 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
           {
             ageGroupsArray.map(ageGroup => {
 
-            const ageGroupUsers = getGroupUsersArray(ageGroup);
+            const ageGroupUsers = sortUsersWithGroups(ageGroup);
 
             return (
               <React.Fragment>
@@ -161,7 +160,7 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
 }
 
 AgeGroupsTable.propTypes = {
-  usersArray: PropTypes.array.isRequired,
+  usersArray: PropTypes.object.isRequired,
   dragOverHandler: PropTypes.func.isRequired,
   dragEndHandler: PropTypes.func.isRequired,
   dragLeaveHandler: PropTypes.func.isRequired,
