@@ -38,7 +38,7 @@ const useStyles = makeStyles({
   }
 });
 
-const AgeGroupsTable = ({ usersArray }) => {
+const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler }) => {
   const classes = useStyles();
 
   const [searching, setSearching] = useState('');
@@ -52,14 +52,14 @@ const AgeGroupsTable = ({ usersArray }) => {
     return ageGroupsMinAge.map(age => `${age}-${age+10}`)
   }
 
-  const ageGroupsArray = getAgeGroups(50);
-
   function getGroupUsersArray(ageGroup) {
     const categoryAgeArray = ageGroup.split('-');
     const minAge = +categoryAgeArray[0];
     const maxAge = +categoryAgeArray[1];
     return usersList.filter(user => minAge < user.registered.age && user.registered.age <= maxAge )
   }
+
+  const ageGroupsArray = getAgeGroups(50);
 
   function initialData() {
     let initialObject = {}
@@ -139,11 +139,16 @@ const AgeGroupsTable = ({ usersArray }) => {
                 </TableRow>
                 { isOpened[ageGroup] &&
                   ageGroupUsers.map(user =>
-                    <TableRow className={classes.tableRow}>
-                      <TableCell className={classes.userCard} component="th" scope="row">
-                        <UserCard user={user} favoriteUser={false}/>
-                      </TableCell>
-                    </TableRow>
+                    <UserCard
+                      user={user}
+                      favoriteUser={false}
+                      list={usersList}
+                      dragOverHandler={dragOverHandler}
+                      dragEndHandler={dragEndHandler}
+                      dragLeaveHandler={dragLeaveHandler}
+                      dropHandler={dropHandler}
+                      dragStartHandler={dragStartHandler}
+                    />
                   )
                 }
               </React.Fragment>
@@ -156,7 +161,12 @@ const AgeGroupsTable = ({ usersArray }) => {
 }
 
 AgeGroupsTable.propTypes = {
-  usersArray: PropTypes.array.isRequired
+  usersArray: PropTypes.array.isRequired,
+  dragOverHandler: PropTypes.func.isRequired,
+  dragEndHandler: PropTypes.func.isRequired,
+  dragLeaveHandler: PropTypes.func.isRequired,
+  dropHandler: PropTypes.func.isRequired,
+  dragStartHandler: PropTypes.func.isRequired
 };
 
 export default AgeGroupsTable;

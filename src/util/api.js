@@ -1,6 +1,6 @@
 import axios from './axiosConfig';
 
-export function getUsers(numberOfUsers, setUsers){
+export function getUsers(numberOfUsers, setUsers, setFavoriteUsers){
   axios
     .get(`?results=${numberOfUsers}`)
     .then(response => {

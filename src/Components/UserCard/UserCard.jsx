@@ -5,10 +5,18 @@ import { getReadableDate } from './../../util/misk';
 import clsx from 'clsx';
 
 
-const UserCard = ({ user, favoriteUser }) => {
+const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler }) => {
 
   return (
-    <div className='user-card'>
+    <div
+      className='user-card'
+      draggable='true'
+      onDragOver={(ev) => dragOverHandler(ev)}
+      onDragLeave={(ev) => dragLeaveHandler(ev)}
+      onDragStart={(ev) => dragStartHandler(ev, list, user)}
+      onDragEnd={(ev) => dragEndHandler(ev)}
+      onDrop={(ev) => dropHandler(ev, list, user)}
+    >
       <div className='user-card__photo' style={{ backgroundImage: `url(${user.picture.medium})` }} />
       <div className={clsx('user-card__info', {'small-width': favoriteUser})}>
         <div className='user-card__infoField'>
@@ -32,7 +40,13 @@ const UserCard = ({ user, favoriteUser }) => {
 
 UserCard.propTypes = {
   user: PropTypes.object.isRequired,
-  favoriteUser: PropTypes.bool.isRequired
+  favoriteUser: PropTypes.bool.isRequired,
+  list: PropTypes.array.isRequired,
+  dragOverHandler: PropTypes.func.isRequired,
+  dragEndHandler: PropTypes.func.isRequired,
+  dragLeaveHandler: PropTypes.func.isRequired,
+  dropHandler: PropTypes.func.isRequired,
+  dragStartHandler: PropTypes.func.isRequired
 };
 
 export default UserCard;

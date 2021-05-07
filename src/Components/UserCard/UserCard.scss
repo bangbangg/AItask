@@ -2,18 +2,19 @@
 @import './../../media';
 
 
+.user-card {
+  display: flex;
+  width: 100% ;
+  height: 55px !important;
+  cursor: move;
+}
+
 .user-card__photo {
   width: 20%;
   border: 1px solid gray;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-}
-
-.user-card {
-  display: flex;
-  width: 100% ;
-  height: 55px !important;
 }
 
 .user-card__info {
@@ -27,6 +28,9 @@
     height: 50%;
     font-size: 10px;
     padding-left: 4px;
+    background-color: rgb(119, 200, 230);
+    font-family: 'GothamPro';
+    font-weight: 300;
 
     &:first-child {
       border-bottom: 1px solid gray;
