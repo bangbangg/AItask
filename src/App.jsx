@@ -14,6 +14,7 @@ function App() {
   const [favoriteUsers, setFavoriteUsers] = useState(favoriteInitialData);
   const [currentList, setCurrentList] = useState({});
   const [currentCard, setCurrentCard] = useState({});
+  const [hightLightFavorites, setHighLightFavorites] = useState('')
 
   if (!Object.keys(users)[0]) {
     getUsers('500', setUsers);
@@ -41,6 +42,7 @@ function App() {
   function dragStartHandler(ev, list, user){
     setCurrentCard(user);
     setCurrentList(list);
+    setHighLightFavorites('highlightList');
   }
 
   function dragEndHandler(ev){
@@ -55,6 +57,7 @@ function App() {
     list.users.splice(dropIndex + 1, 0, currentCard);
     compareAndSetNewList(list);
     compareAndSetNewList(currentList);
+    setHighLightFavorites('');
   }
 
   function dropCardHandler(ev, list) {
@@ -64,6 +67,7 @@ function App() {
       const currentIndex = currentList.users.indexOf(currentCard);
       currentList.users.splice(currentIndex, 1);
       setFavoriteUsers({...list});
+      setHighLightFavorites('');
     }
   }
 
@@ -82,7 +86,7 @@ function App() {
         />
       }
       <FavoriteUsers
-        className='favorites-table'
+        listHightLight={hightLightFavorites}
         favoriteUsers={favoriteUsers}
         setFavoriteUsers={setFavoriteUsers}
         dragOverHandler={dragOverHandler}

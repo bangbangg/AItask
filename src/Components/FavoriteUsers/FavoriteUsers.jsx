@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   }
 });
 
-const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler, dropCardHandler, setFavoriteUsers }) => {
+const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler, dropCardHandler, setFavoriteUsers, listHightLight }) => {
   const classes = useStyles();
 
   return (
@@ -50,15 +50,16 @@ const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragE
         </TableRow>
       </TableHead>
       <TableBody
-        className='draggable-container'
+        className={listHightLight}
         onDragOver={(ev) => dragOverHandler(ev)}
         onDrop={(ev) => dropCardHandler(ev, favoriteUsers)}
       >
         {
-          !!favoriteUsers.users.length &&
-          favoriteUsers.users.map(user =>
+          !!favoriteUsers.users.length
+          ?
+          (favoriteUsers.users.map(user =>
             <UserCard
-              className='favorite_users'
+              className='favorite_user'
               user={user}
               favoriteUser={true}
               setFavoriteUsers={setFavoriteUsers}
@@ -69,11 +70,14 @@ const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragE
               dropHandler={dropHandler}
               dragStartHandler={dragStartHandler}
             />
+          ))
+          :
+          (
+            <TableRow>
+              <TableCell className={classes.tableCellHeader} />
+            </TableRow>
           )
         }
-        <TableRow>
-          <TableCell className={classes.tableCellHeader} />
-        </TableRow>
       </TableBody>
     </Table>
   </TableContainer>
@@ -88,7 +92,8 @@ FavoriteUsers.propTypes = {
   dropHandler: PropTypes.func.isRequired,
   dragStartHandler: PropTypes.func.isRequired,
   dropCardHandler: PropTypes.func.isRequired,
-  setFavoriteUsers: PropTypes.func.isRequired
+  setFavoriteUsers: PropTypes.func.isRequired,
+  listHightLight: PropTypes.string.isRequired
 };
 
 export default FavoriteUsers;
