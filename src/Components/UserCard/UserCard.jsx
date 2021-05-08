@@ -38,7 +38,7 @@ const UserCard = ({ user, isFavoriteUser, list }) => {
           {' ' + getReadableDate(user.registered.date)}
         </div>
         <div className='user-card__infoField'>
-          <span className='bold-text'>Email:</span>
+          <span className='bold-text'>Эл.адрес:</span>
           {' ' + user.email}
         </div>
       </div>
