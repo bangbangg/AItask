@@ -4,7 +4,7 @@ import { getUsers } from './util/api';
 import AgeGroupsTable from './Components/AgeGroupsTable/AgeGroupsTable';
 import LoadingSpinner from './reusable/LoadingSpinner';
 import FavoriteUsers from './Components/FavoriteUsers/FavoriteUsers';
-import {Context} from './context'
+import { Context } from './context'
 
 
 const FAVORITE_INITIAL_DATA = {id: 2, users: []};
@@ -15,16 +15,13 @@ function App() {
   const [favoriteUsers, setFavoriteUsers] = useState(FAVORITE_INITIAL_DATA);
   const [currentList, setCurrentList] = useState({});
   const [currentCard, setCurrentCard] = useState({});
-  const [hightLightFavorites, setHighLightFavorites] = useState('')
-
+  const [highLightFavorites, setHighLightFavorites] = useState('')
 
   //тут вводим необходимое количество пользователей (по доке макс. 5.000)
   if (!Object.keys(users)[0]) {
     getUsers('4000', setUsers);
     return <LoadingSpinner />
   }
-
-  console.log(users.length)
 
   const sortedUsersArray = users.users.sort(function(a, b){return a.registered.age - b.registered.age});
   const fromMinToMaxAge = {...users, ...{users: sortedUsersArray}}
@@ -89,7 +86,7 @@ function App() {
           />
         }
         <FavoriteUsers
-          listHightLight={hightLightFavorites}
+          listHighLight={highLightFavorites}
           favoriteUsers={favoriteUsers}
         />
       </div>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { getReadableDate } from './../../util/misk';
-import {Context} from './../../context';
+import { Context } from './../../context';
 import './UserCard.scss';
 
 
@@ -12,8 +12,8 @@ const UserCard = ({ user, isFavoriteUser, list }) => {
 
   function onDeleteUser(user) {
     const deleteIndex = list.users.indexOf(user);
-    list.users.splice(deleteIndex, 1)
-    setFavoriteUsers({...list})
+    list.users.splice(deleteIndex, 1);
+    setFavoriteUsers({...list});
   }
 
   return (

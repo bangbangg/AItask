@@ -54,7 +54,7 @@ const AgeGroupsTable = ({ usersArray }) => {
     const categoryAgeArray = ageGroup.split('-');
     const minAge = +categoryAgeArray[0];
     const maxAge = +categoryAgeArray[1];
-    return currentList.users.filter(user => minAge < user.registered.age && user.registered.age <= maxAge );
+    return currentList.users.filter(user => minAge < user.registered.age && user.registered.age <= maxAge);
   }
 
   function initialAgeGroupsData() {
@@ -107,7 +107,7 @@ const AgeGroupsTable = ({ usersArray }) => {
                   labelWidth={70}
                   onKeyPress={(ev) => onKeyPressHandler(ev)}
                 />
-            </FormControl>
+              </FormControl>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -115,33 +115,35 @@ const AgeGroupsTable = ({ usersArray }) => {
           {
             ageGroupsArray.map(ageGroup => {
 
-            const ageGroupUsers = sortUsersWithGroups(ageGroup);
+              const ageGroupUsers = sortUsersWithGroups(ageGroup);
 
-            return (
-              <React.Fragment>
-                <TableRow className={classes.tableRow}>
-                  <TableCell
-                    className={clsx(classes.tableCell, {'disabled': !ageGroupUsers.length})}
-                    component="th"
-                    scope="row"
-                    onClick={() => {
-                      toggleUserList(ageGroup);
-                    }}
-                  >
-                    {ageGroup}
-                  </TableCell>
-                </TableRow>
-                { isOpened[ageGroup] &&
-                  ageGroupUsers.map(user =>
-                    <UserCard
-                      user={user}
-                      isFavoriteUser={false}
-                      list={usersList}
-                    />
-                  )
-                }
-              </React.Fragment>
-            )})
+              return (
+                <React.Fragment>
+                  <TableRow className={classes.tableRow}>
+                    <TableCell
+                      className={clsx(classes.tableCell, { 'disabled': !ageGroupUsers.length })}
+                      component="th"
+                      scope="row"
+                      onClick={() => {
+                        toggleUserList(ageGroup);
+                      }}
+                    >
+                      {ageGroup}
+                    </TableCell>
+                  </TableRow>
+                  {
+                    isOpened[ageGroup] &&
+                    ageGroupUsers.map(user =>
+                      <UserCard
+                        user={user}
+                        isFavoriteUser={false}
+                        list={usersList}
+                      />
+                    )
+                  }
+                </React.Fragment>
+              );
+            })
           }
         </TableBody>
       </Table>

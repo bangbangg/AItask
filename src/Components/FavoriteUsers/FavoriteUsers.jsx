@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import UserCard from '../UserCard/UserCard';
 import './FavoriteUsers.scss';
-import {Context} from './../../context';
+import { Context } from './../../context';
 
 
 const useStyles = makeStyles({
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   }
 });
 
-const FavoriteUsers = ({ favoriteUsers, listHightLight }) => {
+const FavoriteUsers = ({ favoriteUsers, listHighLight }) => {
   const classes = useStyles();
 
   const {dropCardHandler, dragOverHandler} = useContext(Context);
@@ -53,7 +53,7 @@ const FavoriteUsers = ({ favoriteUsers, listHightLight }) => {
         </TableRow>
       </TableHead>
       <TableBody
-        className={listHightLight}
+        className={listHighLight}
         onDragOver={(ev) => dragOverHandler(ev)}
         onDrop={(ev) => dropCardHandler(ev, favoriteUsers)}
       >
@@ -83,7 +83,7 @@ const FavoriteUsers = ({ favoriteUsers, listHightLight }) => {
 
 FavoriteUsers.propTypes = {
   favoriteUsers: PropTypes.object.isRequired,
-  listHightLight: PropTypes.string.isRequired
+  listHighLight: PropTypes.string.isRequired
 };
 
 export default FavoriteUsers;
