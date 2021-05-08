@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import clsx from 'clsx';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { getReadableDate } from './../../util/misk';
 import { Context } from './../../context';
@@ -29,21 +30,28 @@ const UserCard = ({ user, isFavoriteUser, list }) => {
       <div className='user-card__photo' style={{ backgroundImage: `url(${user.picture.medium})` }} />
       <div className={clsx('user-card__info', {'small-width': isFavoriteUser})}>
         <div className='user-card__infoField'>
-          {`${user.name.first} ${user.name.last}, дата регистрации: ${getReadableDate(user.registered.date)}`}
+          <span className='bold-text'>Имя:</span>
+          {` ${user.name.first} ${user.name.last}`}
         </div>
         <div className='user-card__infoField'>
-          {user.email}
+          <span className='bold-text'>Дата регистрации:</span>
+          {' ' + getReadableDate(user.registered.date)}
+        </div>
+        <div className='user-card__infoField'>
+          <span className='bold-text'>Email:</span>
+          {' ' + user.email}
         </div>
       </div>
       {
         isFavoriteUser &&
         <div className='user-card__delete-from-favorite'>
-          <button
+          <Button
             className='user-card_delete-from-favorite__button'
+            variant="outlined"
             onClick={() => onDeleteUser(user)}
           >
-            Удалить
-          </button>
+            &#10006;
+          </Button>
         </div>
       }
     </div>

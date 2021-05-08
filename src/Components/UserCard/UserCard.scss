@@ -27,12 +27,11 @@
     height: 50%;
     font-size: 10px;
     padding-left: 4px;
-    background-color: $light-blue;
     font-family: 'GothamPro';
     font-weight: 300;
 
-    &:first-child {
-      border-bottom: 1px solid $medium-gray;
+    .bold-text {
+      font-weight: 700;
     }
   }
 }
