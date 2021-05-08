@@ -24,6 +24,8 @@ function App() {
     return <LoadingSpinner />
   }
 
+  console.log(users.length)
+
   const sortedUsersArray = users.users.sort(function(a, b){return a.registered.age - b.registered.age});
   const fromMinToMaxAge = {...users, ...{users: sortedUsersArray}}
 
