@@ -30,15 +30,15 @@ const UserCard = ({ user, isFavoriteUser, list }) => {
       <div className='user-card__photo' style={{ backgroundImage: `url(${user.picture.medium})` }} />
       <div className={clsx('user-card__info', {'small-width': isFavoriteUser})}>
         <div className='user-card__infoField'>
-          <span className='bold-text'>Имя:</span>
+          <span className='user-card__bold-text'>Имя:</span>
           {` ${user.name.first} ${user.name.last}`}
         </div>
         <div className='user-card__infoField'>
-          <span className='bold-text'>Дата регистрации:</span>
+          <span className='user-card__bold-text'>Дата регистрации:</span>
           {' ' + getReadableDate(user.registered.date)}
         </div>
         <div className='user-card__infoField'>
-          <span className='bold-text'>Эл.адрес:</span>
+          <span className='user-card__bold-text'>Эл.адрес:</span>
           {' ' + user.email}
         </div>
       </div>

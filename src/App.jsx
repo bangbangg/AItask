@@ -64,7 +64,6 @@ function App() {
 
   function dropCardHandler(ev, list) {
     if (!ev.target.className.includes('user-card')) {
-      console.log(ev.target.className)
       list.users.push(currentCard);
       const currentIndex = currentList.users.indexOf(currentCard);
       currentList.users.splice(currentIndex, 1);
