@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import UserCard from '../UserCard/UserCard';
 import './FavoriteUsers.scss';
+import {Context} from './../../context';
 
 
 const useStyles = makeStyles({
@@ -36,8 +37,10 @@ const useStyles = makeStyles({
   }
 });
 
-const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler, dropCardHandler, setFavoriteUsers, listHightLight }) => {
+const FavoriteUsers = ({ favoriteUsers, listHightLight }) => {
   const classes = useStyles();
+
+  const {dropCardHandler, dragOverHandler} = useContext(Context);
 
   return (
     <TableContainer component={Paper}>
@@ -61,14 +64,8 @@ const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragE
             <UserCard
               className='favorite_user'
               user={user}
-              favoriteUser={true}
-              setFavoriteUsers={setFavoriteUsers}
+              isFavoriteUser={true}
               list={favoriteUsers}
-              dragOverHandler={dragOverHandler}
-              dragEndHandler={dragEndHandler}
-              dragLeaveHandler={dragLeaveHandler}
-              dropHandler={dropHandler}
-              dragStartHandler={dragStartHandler}
             />
           ))
           :
@@ -86,13 +83,6 @@ const FavoriteUsers = ({ favoriteUsers, dragOverHandler, dragLeaveHandler, dragE
 
 FavoriteUsers.propTypes = {
   favoriteUsers: PropTypes.object.isRequired,
-  dragOverHandler: PropTypes.func.isRequired,
-  dragEndHandler: PropTypes.func.isRequired,
-  dragLeaveHandler: PropTypes.func.isRequired,
-  dropHandler: PropTypes.func.isRequired,
-  dragStartHandler: PropTypes.func.isRequired,
-  dropCardHandler: PropTypes.func.isRequired,
-  setFavoriteUsers: PropTypes.func.isRequired,
   listHightLight: PropTypes.string.isRequired
 };
 

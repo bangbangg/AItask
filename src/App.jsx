@@ -4,14 +4,15 @@ import { getUsers } from './util/api';
 import AgeGroupsTable from './Components/AgeGroupsTable/AgeGroupsTable';
 import LoadingSpinner from './reusable/LoadingSpinner';
 import FavoriteUsers from './Components/FavoriteUsers/FavoriteUsers';
+import {Context} from './context'
 
 
-const favoriteInitialData = {id: 2, users: []};
+const FAVORITE_INITIAL_DATA = {id: 2, users: []};
 
 function App() {
 
   const [users, setUsers] = useState({});
-  const [favoriteUsers, setFavoriteUsers] = useState(favoriteInitialData);
+  const [favoriteUsers, setFavoriteUsers] = useState(FAVORITE_INITIAL_DATA);
   const [currentList, setCurrentList] = useState({});
   const [currentCard, setCurrentCard] = useState({});
   const [hightLightFavorites, setHighLightFavorites] = useState('')
@@ -47,6 +48,7 @@ function App() {
 
   function dragEndHandler(ev){
     ev.target.style.boxShadow = 'none'
+    setHighLightFavorites('');
   }
 
   function dropHandler(ev, list, user){
@@ -57,7 +59,6 @@ function App() {
     list.users.splice(dropIndex + 1, 0, currentCard);
     compareAndSetNewList(list);
     compareAndSetNewList(currentList);
-    setHighLightFavorites('');
   }
 
   function dropCardHandler(ev, list) {
@@ -67,36 +68,28 @@ function App() {
       const currentIndex = currentList.users.indexOf(currentCard);
       currentList.users.splice(currentIndex, 1);
       setFavoriteUsers({...list});
-      setHighLightFavorites('');
     }
   }
 
   return (
-    <div className="users-wrapper">
-      {
-        users.users.length &&
-        <AgeGroupsTable
-          className='users-table'
-          usersArray={fromMinToMaxAge}
-          dragOverHandler={dragOverHandler}
-          dragEndHandler={dragEndHandler}
-          dragLeaveHandler={dragLeaveHandler}
-          dropHandler={dropHandler}
-          dragStartHandler={dragStartHandler}
+    <Context.Provider value={{
+      dragOverHandler, dragLeaveHandler, dragEndHandler, dragStartHandler,
+      dropHandler, dropCardHandler, setFavoriteUsers
+    }}>
+      <div className="users-wrapper">
+        {
+          users.users.length &&
+          <AgeGroupsTable
+            className='users-table'
+            usersArray={fromMinToMaxAge}
+          />
+        }
+        <FavoriteUsers
+          listHightLight={hightLightFavorites}
+          favoriteUsers={favoriteUsers}
         />
-      }
-      <FavoriteUsers
-        listHightLight={hightLightFavorites}
-        favoriteUsers={favoriteUsers}
-        setFavoriteUsers={setFavoriteUsers}
-        dragOverHandler={dragOverHandler}
-        dragEndHandler={dragEndHandler}
-        dragLeaveHandler={dragLeaveHandler}
-        dropHandler={dropHandler}
-        dragStartHandler={dragStartHandler}
-        dropCardHandler={dropCardHandler}
-      />
-    </div>
+      </div>
+    </Context.Provider>
   );
 }
 

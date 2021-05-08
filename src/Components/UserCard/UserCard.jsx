@@ -1,13 +1,16 @@
-import React from 'react';
-import './UserCard.scss';
+import React, { useContext } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { getReadableDate } from './../../util/misk';
-import clsx from 'clsx';
+import {Context} from './../../context';
+import './UserCard.scss';
 
 
-const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler, setFavoriteUsers }) => {
+const UserCard = ({ user, isFavoriteUser, list }) => {
 
-  function onDeleteButtonPress(user) {
+  const {dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler, setFavoriteUsers} = useContext(Context);
+
+  function onDeleteUser(user) {
     const deleteIndex = list.users.indexOf(user);
     list.users.splice(deleteIndex, 1)
     setFavoriteUsers({...list})
@@ -24,7 +27,7 @@ const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler,
       onDrop={(ev) => dropHandler(ev, list, user)}
     >
       <div className='user-card__photo' style={{ backgroundImage: `url(${user.picture.medium})` }} />
-      <div className={clsx('user-card__info', {'small-width': favoriteUser})}>
+      <div className={clsx('user-card__info', {'small-width': isFavoriteUser})}>
         <div className='user-card__infoField'>
           {`${user.name.first} ${user.name.last}, дата регистрации: ${getReadableDate(user.registered.date)}`}
         </div>
@@ -33,11 +36,11 @@ const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler,
         </div>
       </div>
       {
-        favoriteUser &&
+        isFavoriteUser &&
         <div className='user-card__delete-from-favorite'>
           <button
             className='user-card_delete-from-favorite__button'
-            onClick={() => onDeleteButtonPress(user)}
+            onClick={() => onDeleteUser(user)}
           >
             Удалить
           </button>
@@ -49,14 +52,8 @@ const UserCard = ({ user, favoriteUser, list, dragOverHandler, dragLeaveHandler,
 
 UserCard.propTypes = {
   user: PropTypes.object.isRequired,
-  favoriteUser: PropTypes.bool.isRequired,
-  list: PropTypes.array.isRequired,
-  dragOverHandler: PropTypes.func.isRequired,
-  dragEndHandler: PropTypes.func.isRequired,
-  dragLeaveHandler: PropTypes.func.isRequired,
-  dropHandler: PropTypes.func.isRequired,
-  dragStartHandler: PropTypes.func.isRequired,
-  setFavoriteUsers: PropTypes.func.isRequired
+  isFavoriteUser: PropTypes.bool.isRequired,
+  list: PropTypes.array.isRequired
 };
 
 export default UserCard;

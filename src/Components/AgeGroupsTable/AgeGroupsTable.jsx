@@ -13,7 +13,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import clsx from 'clsx';
-import { changeSearchTextColor } from './../../util/misk';
+import { changeSearchTextColor, getAgeGroups } from './../../util/misk';
 import './AgeGroupsTable.scss';
 
 
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
   }
 });
 
-const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEndHandler, dropHandler, dragStartHandler }) => {
+const AgeGroupsTable = ({ usersArray }) => {
 
   const classes = useStyles();
 
@@ -46,13 +46,7 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
 
   const [usersList, setUsersList] = useState(usersArray);
 
-  //тут стоит ввести возраст, кратный десяти, чтоб получить крайнее значение возрастных групп
-  function getAgeGroups(maxAge) {
-    const registrationAges = Array.apply(null, {length: maxAge + 1}).map(Number.call, Number);
-    const ageGroupsMinAge = registrationAges.filter(age => age%10 === 0);
-    return ageGroupsMinAge.map(age => `${age}-${age+10}`)
-  }
-
+   //тут стоит ввести крайнее значение групп для таблицы
   const ageGroupsArray = getAgeGroups(50);
 
   function sortUsersWithGroups(ageGroup) {
@@ -140,13 +134,8 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
                   ageGroupUsers.map(user =>
                     <UserCard
                       user={user}
-                      favoriteUser={false}
+                      isFavoriteUser={false}
                       list={usersList}
-                      dragOverHandler={dragOverHandler}
-                      dragEndHandler={dragEndHandler}
-                      dragLeaveHandler={dragLeaveHandler}
-                      dropHandler={dropHandler}
-                      dragStartHandler={dragStartHandler}
                     />
                   )
                 }
@@ -161,11 +150,6 @@ const AgeGroupsTable = ({ usersArray, dragOverHandler, dragLeaveHandler, dragEnd
 
 AgeGroupsTable.propTypes = {
   usersArray: PropTypes.object.isRequired,
-  dragOverHandler: PropTypes.func.isRequired,
-  dragEndHandler: PropTypes.func.isRequired,
-  dragLeaveHandler: PropTypes.func.isRequired,
-  dropHandler: PropTypes.func.isRequired,
-  dragStartHandler: PropTypes.func.isRequired
 };
 
 export default AgeGroupsTable;

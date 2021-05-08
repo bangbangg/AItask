@@ -16,3 +16,9 @@ export function changeSearchTextColor(searchingFor, backgroundColor='yellow') {
     document.designMode = "off";
   }
 }
+
+export function getAgeGroups(maxAge) {
+  const registrationAges = Array.apply(null, {length: maxAge + 1}).map(Number.call, Number);
+  const ageGroupsMinAge = registrationAges.filter(age => age%10 === 0);
+  return ageGroupsMinAge.map(age => `${age}-${age+10}`)
+}
