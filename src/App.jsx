@@ -17,8 +17,10 @@ function App() {
   const [currentCard, setCurrentCard] = useState({});
   const [hightLightFavorites, setHighLightFavorites] = useState('')
 
+
+  //тут вводим необходимое количество пользователей (по доке макс. 5.000)
   if (!Object.keys(users)[0]) {
-    getUsers('500', setUsers);
+    getUsers('4000', setUsers);
     return <LoadingSpinner />
   }
 

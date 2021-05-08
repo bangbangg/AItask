@@ -11,7 +11,7 @@
 
 .user-card__photo {
   width: 20%;
-  border: 1px solid gray;
+  border: 1px solid $medium-gray;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -20,7 +20,7 @@
 .user-card__info {
   width: 80%;
   padding-bottom: 2px;
-  border: 1px solid gray;
+  border: 1px solid $medium-gray;
   display: flex;
   flex-direction: column;
 
@@ -28,12 +28,12 @@
     height: 50%;
     font-size: 10px;
     padding-left: 4px;
-    background-color: rgb(119, 200, 230);
+    background-color: $light-blue;
     font-family: 'GothamPro';
     font-weight: 300;
 
     &:first-child {
-      border-bottom: 1px solid gray;
+      border-bottom: 1px solid $medium-gray;
     }
   }
 }
@@ -44,12 +44,12 @@
 
 .user-card__delete-from-favorite {
   width: 20%;
-  border: 1px solid gray;
+  border: 1px solid $medium-gray;
 
   .user-card_delete-from-favorite__button {
     width: 100%;
     height: 100%;
-    background-color: green;
+    background-color: $light-green;
     color: black;
   }
 }

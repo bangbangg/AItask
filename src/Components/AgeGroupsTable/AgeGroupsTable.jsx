@@ -50,10 +50,11 @@ const AgeGroupsTable = ({ usersArray }) => {
   const ageGroupsArray = getAgeGroups(50);
 
   function sortUsersWithGroups(ageGroup) {
+    const currentList = usersList;
     const categoryAgeArray = ageGroup.split('-');
     const minAge = +categoryAgeArray[0];
     const maxAge = +categoryAgeArray[1];
-    return usersList.users.filter(user => minAge < user.registered.age && user.registered.age <= maxAge );
+    return currentList.users.filter(user => minAge < user.registered.age && user.registered.age <= maxAge );
   }
 
   function initialAgeGroupsData() {
