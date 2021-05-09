@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import UserCard from '../UserCard/UserCard';
+import clsx from 'clsx';
 import './FavoriteUsers.scss';
 import { Context } from './../../context';
 
@@ -33,7 +34,8 @@ const useStyles = makeStyles({
     width: '50%'
   },
   tableRow: {
-    height: '55px'
+    height: '55px',
+    padding: '0'
   }
 });
 
@@ -47,7 +49,7 @@ const FavoriteUsers = ({ favoriteUsers, listHighLight }) => {
     <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
         <TableRow>
-          <TableCell className={classes.tableCellHeader}>
+          <TableCell className={clsx(classes.tableCellHeader, 'favorite-users__heading')}>
             Избранные
           </TableCell>
         </TableRow>
@@ -71,7 +73,7 @@ const FavoriteUsers = ({ favoriteUsers, listHighLight }) => {
           :
           (
             <TableRow>
-              <TableCell className={classes.tableCellHeader} />
+              <TableCell className={classes.tableRow} />
             </TableRow>
           )
         }

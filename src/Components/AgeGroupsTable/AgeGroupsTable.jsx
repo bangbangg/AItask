@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     fontSize: '14px',
     cursor: 'pointer',
-    border: '1px solid black'
+    border: '1px solid black',
   },
   userCard: {
     padding: 0,
@@ -108,7 +108,7 @@ const AgeGroupsTable = ({ usersArray }) => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className='age-groups__container'>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -139,18 +139,21 @@ const AgeGroupsTable = ({ usersArray }) => {
 
               const showedArray = showPartOfUsers();
 
+              console.log(!!ageGroupUsers.length && !!isOpened[ageGroup])
+
               return (
                 <React.Fragment>
                   <TableRow className={classes.tableRow}>
                     <TableCell
-                      className={clsx(classes.tableCell, { 'disabled': !ageGroupUsers.length })}
+                      className={clsx(classes.tableCell, 'flex', { 'disabled': !ageGroupUsers.length })}
                       component="th"
                       scope="row"
                       onClick={() => {
                         toggleUserList(ageGroup);
                       }}
                     >
-                      {ageGroup}
+                      <span>{ageGroup}</span>
+                      {!!ageGroupUsers.length && <span className={!!isOpened[ageGroup]? 'arrow-up' : 'arrow-down'} />}
                     </TableCell>
                   </TableRow>
                   {
