@@ -139,8 +139,6 @@ const AgeGroupsTable = ({ usersArray }) => {
 
               const showedArray = showPartOfUsers();
 
-              console.log(!!ageGroupUsers.length && !!isOpened[ageGroup])
-
               return (
                 <React.Fragment>
                   <TableRow className={classes.tableRow}>
