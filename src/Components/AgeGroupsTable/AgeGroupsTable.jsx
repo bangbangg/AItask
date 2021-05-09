@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     fontSize: '14px',
     cursor: 'pointer',
-    border: '1px solid black',
+    border: '1px solid black'
   },
   userCard: {
     padding: 0,

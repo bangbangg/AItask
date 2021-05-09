@@ -19,7 +19,7 @@ You will also see any lint errors in the console.
 
 Вы можете поменять количество отображаемых рандомных пользователей.\
 Для этого вам необходимо ввести интересующее вас число в src/App.jsx \
-в строке 23 вместо "4000" => `getUsers('4000', setUsers)`;
+в строке 22 вместо "4000" => `getUsers('4000', setUsers)`;
 
 ## `группы пользователей`
 
@@ -27,7 +27,7 @@ You will also see any lint errors in the console.
 прошедшего с их даты регистрации \
 группы разбиты на десятки : "1-10" / "11-20" и.т.д .\
 вы можете регулировать последнюю группу в src/components/AgeGroupsTable \
-на 50 строке  => `const ageGroupsArray = getAgeGroups(50)` \
+на 52 строке  => `const ageGroupsArray = getAgeGroups(50)` \
 просто замените 50 на любое нужное вам число
 
 
