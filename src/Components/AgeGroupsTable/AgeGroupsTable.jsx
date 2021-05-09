@@ -12,6 +12,7 @@ import UserCard from '../UserCard/UserCard';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
 import { changeSearchTextColor, getAgeGroups } from './../../util/misk';
 import './AgeGroupsTable.scss';
@@ -27,7 +28,8 @@ const useStyles = makeStyles({
   tableCell: {
     fontWeight: 'bold',
     fontSize: '14px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    border: '1px solid black'
   },
   userCard: {
     padding: 0,
@@ -60,12 +62,14 @@ const AgeGroupsTable = ({ usersArray }) => {
   function initialAgeGroupsData() {
     let initialObject = {}
     for (let i=0; i<ageGroupsArray.length; i++) {
-      initialObject[ageGroupsArray[i]] = false
+      initialObject[ageGroupsArray[i]] = 0
     }
     return initialObject;
   }
 
   const [isOpened, setIsOpened] = useState(initialAgeGroupsData());
+
+  console.log(isOpened);
 
   useEffect(() => {
     if (usersArray.users.length !== usersList.users.length && !!searching) {
@@ -74,7 +78,17 @@ const AgeGroupsTable = ({ usersArray }) => {
   }, [usersList, isOpened])
 
   function toggleUserList(ageGroup){
-    const currentList = {[ageGroup]: !isOpened[ageGroup]}
+    if (!!isOpened[ageGroup]) {
+      const currentList = {[ageGroup]: 0}
+      setIsOpened({...isOpened, ...currentList})
+    } else {
+      const currentList = {[ageGroup]: 100}
+      setIsOpened({...isOpened, ...currentList})
+    }
+  }
+
+  function showMoreUsers(ageGroup) {
+    const currentList = {[ageGroup]: isOpened[ageGroup] + 100}
     setIsOpened({...isOpened, ...currentList})
   }
 
@@ -116,6 +130,13 @@ const AgeGroupsTable = ({ usersArray }) => {
             ageGroupsArray.map(ageGroup => {
 
               const ageGroupUsers = sortUsersWithGroups(ageGroup);
+              const arrayLength = ageGroupUsers.length;
+
+              function showPartOfUsers() {
+                return ageGroupUsers.slice(0, isOpened[ageGroup]);
+              }
+
+              const showedArray = showPartOfUsers();
 
               return (
                 <React.Fragment>
@@ -132,14 +153,25 @@ const AgeGroupsTable = ({ usersArray }) => {
                     </TableCell>
                   </TableRow>
                   {
-                    isOpened[ageGroup] &&
-                    ageGroupUsers.map(user =>
+                    !!isOpened[ageGroup] &&
+                    showedArray.map(user =>
                       <UserCard
                         user={user}
                         isFavoriteUser={false}
                         list={usersList}
                       />
                     )
+                  }
+                  {
+                    !!isOpened[ageGroup] &&
+                    showedArray.length < arrayLength &&
+                    <Button
+                      variant="contained"
+                      className='show-more__button'
+                      onClick={() => showMoreUsers(ageGroup)}
+                    >
+                      Показать еще ...
+                    </Button>
                   }
                 </React.Fragment>
               );

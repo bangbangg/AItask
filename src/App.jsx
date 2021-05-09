@@ -19,7 +19,7 @@ function App() {
 
   //тут вводим необходимое количество пользователей (по доке макс. 5.000)
   if (!Object.keys(users)[0]) {
-    getUsers('4000', setUsers);
+    getUsers('5000', setUsers);
     return <LoadingSpinner />
   }
 
