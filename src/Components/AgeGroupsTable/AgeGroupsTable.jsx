@@ -67,9 +67,9 @@ const AgeGroupsTable = ({ usersArray }) => {
     return initialObject;
   }
 
-  const [isOpened, setIsOpened] = useState(initialAgeGroupsData());
+  const groupsInitialData = initialAgeGroupsData();
 
-  console.log(isOpened);
+  const [isOpened, setIsOpened] = useState(groupsInitialData);
 
   useEffect(() => {
     if (usersArray.users.length !== usersList.users.length && !!searching) {
@@ -102,6 +102,7 @@ const AgeGroupsTable = ({ usersArray }) => {
 
   function onKeyPressHandler(ev) {
     if (ev.key === 'Enter') {
+      setIsOpened(groupsInitialData);
       setUsersList({...usersArray, ...{users: searchInUsersArray()}});
     }
   }
